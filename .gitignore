@@ -8,15 +8,27 @@ __pycache__/
 .Python
 env/
 eggs/
+dist/
+build/
 .eggs/
 *.egg-info/
 .installed.cfg
 *.egg
+.pylint.d
 
 # calibre-web
 *.db
 *.log
 config.ini
+cps/static/[0-9]*
 
 .idea/
 *.bak
+*.log.*
+tags
+
+settings.yaml
+gdrive_credentials
+
+vendor
+client_secrets.json

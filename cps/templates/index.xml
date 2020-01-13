@@ -1,56 +1,118 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <id>urn:uuid:2853dacf-ed79-42f5-8e8a-a7bb3d1ae6a2</id>
-  <link rel="self"
-        href="{{url_for('feed_index')}}"
-        type="application/atom+xml;profile=opds-catalog;kind=navigation"/>
-  <link rel="start"
-        href="{{url_for('feed_index')}}"
-        type="application/atom+xml;profile=opds-catalog;kind=navigation"/>
-  <link rel="related"
-        href="{{url_for('feed_index')}}"
-        type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
-  <link rel="up"
-        href="{{url_for('feed_index')}}"
+  <updated>{{ current_time }}</updated>
+  <link rel="self" href="{{url_for('opds.feed_index')}}" type="application/atom+xml;profile=opds-catalog;kind=navigation"/>
+  <link rel="start" title="{{_('Start')}}" href="{{url_for('opds.feed_index')}}"
         type="application/atom+xml;profile=opds-catalog;kind=navigation"/>
   <link rel="search"
-        href="{{url_for('feed_osd')}}"
-        type="application/opensearchdescription+xml"/>
-  <title>Calibre Web</title>
-  <updated>2010-01-10T10:03:10Z</updated>
+      href="{{url_for('opds.feed_osd')}}"
+      type="application/opensearchdescription+xml"/>
+  <title>{{instance}}</title>
   <author>
-    <name>Calibre Web</name>
+    <name>{{instance}}</name>
     <uri>https://github.com/janeczku/calibre-web</uri>
   </author>
-
-
   <entry>
-    <title>Hot Books</title>
-    <link rel="http://opds-spec.org/sort/popular"
-          href="{{url_for('feed_hot')}}"
-          type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
-    <updated>2010-01-10T10:01:01Z</updated>
-    <id>urn:uuid:d49e8018-a0e0-499e-9423-7c175fa0c56e</id>
-    <content type="text">Popular publications from this catalog based on Rating.</content>
+    <title>{{_('Hot Books')}}</title>
+    <link href="{{url_for('opds.feed_hot')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_hot')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Popular publications from this catalog based on Downloads.')}}</content>
   </entry>
-
   <entry>
-    <title>New Books</title>
-    <link rel="http://opds-spec.org/sort/popular"
-          href="{{url_for('feed_new')}}"
-          type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
-    <updated>2010-01-10T10:01:01Z</updated>
-    <id>urn:uuid:d49e8018-a0e0-499e-9423-7c175fa0c56e</id>
-    <content type="text">The latest Books</content>
+    <title>{{_('Best rated Books')}}</title>
+    <link href="{{url_for('opds.feed_best_rated')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_best_rated')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Popular publications from this catalog based on Rating.')}}</content>
   </entry>
-
   <entry>
-    <title>Random Books</title>
-    <link rel="http://opds-spec.org/sort/random"
-          href="{{url_for('feed_discover')}}"
-          type="application/atom+xml;profile=opds-catalog;kind=acquisition"/>
-    <updated>2010-01-10T10:01:01Z</updated>
-    <id>urn:uuid:d49e8018-a0e0-499e-9423-7c175fa0c56e</id>
-    <content type="text">Show Random Books</content>
+    <title>{{_('Recently added Books')}}</title>
+    <link href="{{url_for('opds.feed_new')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_new')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('The latest Books')}}</content>
   </entry>
+  <entry>
+    <title>{{_('Random Books')}}</title>
+    <link href="{{url_for('opds.feed_discover')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_discover')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Show Random Books')}}</content>
+  </entry>
+  {% if not current_user.is_anonymous %}
+  <entry>
+    <title>{{_('Read Books')}}</title>
+    <link href="{{url_for('opds.feed_read_books')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_read_books')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Read Books')}}</content>
+  </entry>
+  <entry>
+    <title>{{_('Unread Books')}}</title>
+    <link href="{{url_for('opds.feed_unread_books')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_unread_books')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Unread Books')}}</content>
+  </entry>
+  {% endif %}
+  <entry>
+    <title>{{_('Authors')}}</title>
+    <link href="{{url_for('opds.feed_authorindex')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_authorindex')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Books ordered by Author')}}</content>
+  </entry>
+  <entry>
+    <title>{{_('Publishers')}}</title>
+    <link href="{{url_for('opds.feed_publisherindex')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_publisherindex')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Books ordered by publisher')}}</content>
+  </entry>
+  <entry>
+    <title>{{_('Categories')}}</title>
+    <link href="{{url_for('opds.feed_categoryindex')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_categoryindex')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Books ordered by category')}}</content>
+  </entry>
+  <entry>
+    <title>{{_('Series')}}</title>
+    <link href="{{url_for('opds.feed_seriesindex')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_seriesindex')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Books ordered by series')}}</content>
+  </entry>
+  <entry>
+    <title>{{_('Languages')}}</title>
+    <link href="{{url_for('opds.feed_languagesindex')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_languagesindex')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Books ordered by Languages')}}</content>
+  </entry>
+  <entry>
+    <title>{{_('File formats')}}</title>
+    <link href="{{url_for('opds.feed_formatindex')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_formatindex')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Books ordered by file formats')}}</content>
+  </entry>
+  <entry>
+    <title>{{_('Public Shelves')}}</title>
+    <link  href="{{url_for('opds.feed_shelfindex', public='public')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_shelfindex', public="public")}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_('Books organized in public shelfs, visible to everyone')}}</content>
+  </entry>
+  {% if not current_user.is_anonymous %}
+  <entry>
+    <title>{{_('Your Shelves')}}</title>
+    <link href="{{url_for('opds.feed_shelfindex')}}" type="application/atom+xml;profile=opds-catalog"/>
+    <id>{{url_for('opds.feed_shelfindex')}}</id>
+    <updated>{{ current_time }}</updated>
+    <content type="text">{{_("User's own shelfs, only visible to the current user himself")}}</content>
+  </entry>
+  {% endif %}
 </feed>
